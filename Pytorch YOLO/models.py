@@ -126,6 +126,7 @@ class YOLOLayer(nn.Module):
         LongTensor = torch.cuda.LongTensor if x.is_cuda else torch.LongTensor
         ByteTensor = torch.cuda.ByteTensor if x.is_cuda else torch.ByteTensor
 
+        print('nB:', nB, " nA:", nA, " self.bbox_attrs:", self.bbox_attrs, " nG", nG)
         prediction = x.view(nB, nA, self.bbox_attrs, nG, nG).permute(0, 1, 3, 4, 2).contiguous()
 
         # Get outputs
@@ -263,6 +264,7 @@ class Darknet(nn.Module):
                 else:
                     x = module(x)
                 output.append(x)
+            print("module_def:", module_def["type"], " shape:" , x.shape)
             layer_outputs.append(x)
 
         self.losses["recall"] /= 3

@@ -67,9 +67,9 @@ def create_modules(module_defs):
         elif module_def["type"] == "route":
             layers = [int(x) for x in module_def["layers"].split(",")]
             filters = sum([output_filters[layer_i] for layer_i in layers])
-            print('route layer - summing the shapes', [output_filters[layer_i] for layer_i in layers])
-            print('output filters:', output_filters)
-            print('output shape:', filters)
+            # print('route layer - summing the shapes', [output_filters[layer_i] for layer_i in layers])
+            # print('output filters:', output_filters)
+            # print('output shape:', filters)
             modules.add_module("route_%d" % i, EmptyLayer())
 
         elif module_def["type"] == "shortcut":
@@ -129,7 +129,7 @@ class YOLOLayer(nn.Module):
         LongTensor = torch.cuda.LongTensor if x.is_cuda else torch.LongTensor
         ByteTensor = torch.cuda.ByteTensor if x.is_cuda else torch.ByteTensor
 
-        print('nB:', nB, " nA:", nA, " self.bbox_attrs:", self.bbox_attrs, " nG", nG, "x.shape:", x.shape)
+        # print('nB:', nB, " nA:", nA, " self.bbox_attrs:", self.bbox_attrs, " nG", nG, "x.shape:", x.shape)
         prediction = x.view(nB, nA, self.bbox_attrs, nG, nG).permute(0, 1, 3, 4, 2).contiguous()
 
         # Get outputs
@@ -162,9 +162,9 @@ class YOLOLayer(nn.Module):
                 self.bce_loss = self.bce_loss.cuda()
                 self.ce_loss = self.ce_loss.cuda()
 
-            nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls = build_targets(
-                pred_boxes=pred_boxes.cpu().data,
-                pred_conf=pred_conf.cpu().data,
+            # nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls = build_targets(
+                # pred_boxes=pred_boxes.cpu().data,
+                # pred_conf=pred_conf.cpu().data,
                 pred_cls=pred_cls.cpu().data,
                 target=targets.cpu().data,
                 anchors=scaled_anchors.cpu().data,
@@ -267,7 +267,7 @@ class Darknet(nn.Module):
                 else:
                     x = module(x)
                 output.append(x)
-            print("module_def:", module_def["type"], " shape:" , x.shape)
+            # print("module_def:", module_def["type"], " shape:" , x.shape)
             layer_outputs.append(x)
 
         self.losses["recall"] /= 3

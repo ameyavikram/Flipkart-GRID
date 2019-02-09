@@ -67,6 +67,8 @@ def create_modules(module_defs):
         elif module_def["type"] == "route":
             layers = [int(x) for x in module_def["layers"].split(",")]
             filters = sum([output_filters[layer_i] for layer_i in layers])
+            print('Route layer - summing the shapes', [output_filters[layer_i].shape for layer_i in layers])
+            print('output shape:', filters.shape)
             modules.add_module("route_%d" % i, EmptyLayer())
 
         elif module_def["type"] == "shortcut":

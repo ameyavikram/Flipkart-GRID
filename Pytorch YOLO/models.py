@@ -162,9 +162,9 @@ class YOLOLayer(nn.Module):
                 self.bce_loss = self.bce_loss.cuda()
                 self.ce_loss = self.ce_loss.cuda()
 
-            # nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls = build_targets(
-                # pred_boxes=pred_boxes.cpu().data,
-                # pred_conf=pred_conf.cpu().data,
+            nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls = build_targets(
+                pred_boxes=pred_boxes.cpu().data,
+                pred_conf=pred_conf.cpu().data,
                 pred_cls=pred_cls.cpu().data,
                 target=targets.cpu().data,
                 anchors=scaled_anchors.cpu().data,

@@ -203,12 +203,12 @@ def build_targets(
     nGT = 0
     nCorrect = 0
 
-    print("target shape:", target.shape, "nB:", nB)
+    # print("target shape:", target.shape, "nB:", nB)
 
     for b in range(nB):
         for t in range(target.shape[1]):
 
-            print('b:', b, ' t:' , t)
+            # print('b:', b, ' t:' , t)
 
             if target[b, t].sum() == 0:
                 continue

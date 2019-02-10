@@ -243,13 +243,13 @@ class Darknet(nn.Module):
         self.seen = 0
         self.header_info = np.array([0, 0, 0, self.seen, 0])
         self.loss_names = ["x", "y", "w", "h", "conf", "cls", "recall", "precision"]
-        self.iou_list = [] # has ious from different yolo layers
+        self.iou_list = np.array([]) # has ious from different yolo layers
 
     def forward(self, x, targets=None):
         is_training = targets is not None
         output = []
         self.losses = defaultdict(float)
-        layer_outputs = np.array([])
+        layer_outputs = []
         for i, (module_def, module) in enumerate(zip(self.module_defs, self.module_list)):
             if module_def["type"] in ["convolutional", "upsample", "maxpool"]:
                 x = module(x)

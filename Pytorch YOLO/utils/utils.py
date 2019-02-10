@@ -218,6 +218,7 @@ def build_targets(
             gy = target[b, t, 2] * nG
             gw = target[b, t, 3] * nG
             gh = target[b, t, 4] * nG
+            print('target[b,t]:', target[b,t])
             print('nG:', nG)
             # Get grid box indices
             gi = int(gx)

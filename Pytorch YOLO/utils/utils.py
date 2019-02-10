@@ -218,6 +218,7 @@ def build_targets(
             gy = target[b, t, 2] * nG
             gw = target[b, t, 3] * nG
             gh = target[b, t, 4] * nG
+            print('nG:', nG)
             # Get grid box indices
             gi = int(gx)
             gj = int(gy)
@@ -232,7 +233,6 @@ def build_targets(
             # Where the overlap is larger than threshold set mask to zero (ignore)
             conf_mask[b, anch_ious > ignore_thres, gj, gi] = 0
             # Find the best matching anchor box
-            print('anch_ious shape:', anch_ious)
             best_n = np.argmax(anch_ious)
             # Get ground truth box
             gt_box = torch.FloatTensor(np.array([gx, gy, gw, gh])).unsqueeze(0)

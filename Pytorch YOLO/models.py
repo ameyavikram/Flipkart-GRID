@@ -262,8 +262,9 @@ class Darknet(nn.Module):
                 # Train phase: get loss
                 if is_training:
                     x, *losses = module[0](x, targets)
-                    for name, loss in zip(self.loss_names, losses):
+                    for name, loss in zip(self.loss_names[:-1], losses[:-1]):
                         self.losses[name] += loss
+                    self.losses["iou"].extend([iou])
                 # Test phase: Get detections
                 else:
                     x = module(x)

@@ -265,6 +265,7 @@ class Darknet(nn.Module):
                     x, *losses = module[0](x, targets)
                     for name, loss in zip(self.loss_names, losses[:-1]):
                         self.losses[name] += loss
+                    print('losses[-1]:', losses[-1])
                     self.iou_list = np.append(self.iou_list, losses[-1])
                 # Test phase: Get detections
                 else:

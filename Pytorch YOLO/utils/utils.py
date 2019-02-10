@@ -199,7 +199,7 @@ def build_targets(
     th = torch.zeros(nB, nA, nG, nG)
     tconf = torch.ByteTensor(nB, nA, nG, nG).fill_(0)
     tcls = torch.ByteTensor(nB, nA, nG, nG, nC).fill_(0)
-    ious_b = []
+    ious_b = np.array([])
 
     nGT = 0
     nCorrect = 0
@@ -256,13 +256,13 @@ def build_targets(
 
             # Calculate iou between ground truth and best matching prediction
             iou = bbox_iou(gt_box, pred_box, x1y1x2y2=False)
-            ious_b.append(float(iou[0]))
+            ious_b = np.append(ious_b, float(iou[0]))
             pred_label = torch.argmax(pred_cls[b, best_n, gj, gi])
             score = pred_conf[b, best_n, gj, gi]
             if iou > 0.5 and pred_label == target_label and score > 0.5:
                 nCorrect += 1
 
-    return nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls, np.array(ious_b)
+    return nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls, ious_b
 
 
 def to_categorical(y, num_classes):

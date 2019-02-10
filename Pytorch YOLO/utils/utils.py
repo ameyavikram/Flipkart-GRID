@@ -260,7 +260,7 @@ def build_targets(
             if iou > 0.5 and pred_label == target_label and score > 0.5:
                 nCorrect += 1
 
-    return nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls
+    return nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls, iou
 
 
 def to_categorical(y, num_classes):

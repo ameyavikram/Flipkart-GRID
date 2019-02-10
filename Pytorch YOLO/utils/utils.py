@@ -218,8 +218,8 @@ def build_targets(
             gy = target[b, t, 2] * nG
             gw = target[b, t, 3] * nG
             gh = target[b, t, 4] * nG
-            print('target[b,t]:', target[b,t])
-            print('nG:', nG)
+            # print('target[b,t]:', target[b,t])
+            # print('nG:', nG)
             # Get grid box indices
             gi = int(gx)
             gj = int(gy)
@@ -228,8 +228,8 @@ def build_targets(
             # Get shape of anchor box
             anchor_shapes = torch.FloatTensor(np.concatenate((np.zeros((len(anchors), 2)), np.array(anchors)), 1))
             # Calculate iou between gt and anchor shapes
-            print('gt_box:', gt_box)
-            print('anchor_shapes:', anchor_shapes)
+            # print('gt_box:', gt_box)
+            # print('anchor_shapes:', anchor_shapes)
             anch_ious = bbox_iou(gt_box, anchor_shapes)
             # Where the overlap is larger than threshold set mask to zero (ignore)
             conf_mask[b, anch_ious > ignore_thres, gj, gi] = 0

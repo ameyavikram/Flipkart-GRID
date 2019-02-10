@@ -249,7 +249,7 @@ class Darknet(nn.Module):
         is_training = targets is not None
         output = []
         self.losses = defaultdict(float)
-        layer_outputs = []
+        layer_outputs = np.array([])
         for i, (module_def, module) in enumerate(zip(self.module_defs, self.module_list)):
             if module_def["type"] in ["convolutional", "upsample", "maxpool"]:
                 x = module(x)
@@ -265,7 +265,7 @@ class Darknet(nn.Module):
                     x, *losses = module[0](x, targets)
                     for name, loss in zip(self.loss_names, losses[:-1]):
                         self.losses[name] += loss
-                    self.iou_list.append(losses[-1])
+                    self.iou_list = np.append(self.iou_list, losses[-1])
                 # Test phase: Get detections
                 else:
                     x = module(x)

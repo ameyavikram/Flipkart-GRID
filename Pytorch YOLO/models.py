@@ -242,7 +242,8 @@ class Darknet(nn.Module):
         self.img_size = img_size
         self.seen = 0
         self.header_info = np.array([0, 0, 0, self.seen, 0])
-        self.loss_names = ["x", "y", "w", "h", "conf", "cls", "recall", "precision", "iou"]
+        self.loss_names = ["x", "y", "w", "h", "conf", "cls", "recall", "precision"]
+        self.iou_list = [] # has ious from different yolo layers
 
     def forward(self, x, targets=None):
         is_training = targets is not None
@@ -262,9 +263,9 @@ class Darknet(nn.Module):
                 # Train phase: get loss
                 if is_training:
                     x, *losses = module[0](x, targets)
-                    for name, loss in zip(self.loss_names[:-1], losses[:-1]):
+                    for name, loss in zip(self.loss_names, losses[:-1]):
                         self.losses[name] += loss
-                    self.losses["iou"].extend([iou])
+                    self.iou_list.append(losses[-1])
                 # Test phase: Get detections
                 else:
                     x = module(x)

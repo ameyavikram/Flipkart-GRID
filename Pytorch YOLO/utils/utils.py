@@ -255,14 +255,13 @@ def build_targets(
 
             # Calculate iou between ground truth and best matching prediction
             iou = bbox_iou(gt_box, pred_box, x1y1x2y2=False)
-            print('iou:', iou)
-            print('iou data[0]:', iou.data[0])
+            print('float(iou[0]):', float(iou[0]))
             pred_label = torch.argmax(pred_cls[b, best_n, gj, gi])
             score = pred_conf[b, best_n, gj, gi]
             if iou > 0.5 and pred_label == target_label and score > 0.5:
                 nCorrect += 1
 
-    return nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls, iou.data[0]
+    return nGT, nCorrect, mask, conf_mask, tx, ty, tw, th, tconf, tcls, float(iou[0])
 
 
 def to_categorical(y, num_classes):
